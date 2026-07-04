@@ -1,0 +1,28 @@
+.container{
+  border: 2px solid black;
+}
+
+.input-form{
+  border: 1px solid blue;
+  width: 600px;
+  height: 500px;
+  margin: auto;
+  border-radius: 10px;
+  font-size: 16px;
+  text-align: justify;
+}
+
+
+.center{
+    text-align: center;
+    margin: auto;
+    color: rgb(5 , 5 , 150);
+}
+
+.dashboard-form{
+  border: 1px solid blue;
+  margin: auto;
+  border-radius: 10px;
+  font-size: 14px;
+  text-align: justify;
+}
