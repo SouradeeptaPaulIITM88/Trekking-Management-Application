@@ -1,20 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/main.css">
-    <title>Register</title>
-</head>
-<body>
- <div class="container">
-    <div class="center" >
-        <h2>Welcome to Jurrassic Trekking Services !</h2>
-    </div>
-
-    <div style="text-align: right;">
-        <input type="text" name="searchtxt"> | <input type="button" value="Search">
-    </div>
+{% extends "base.html" %}
+{% block content %}
 
     <div class="dashboard-form">
         <form>
@@ -58,24 +43,24 @@
         <table class="center" name="Registrations" border="1">
         <caption>Upcoming Registrations</caption>
         <tr>
-            <td>User</td>
-            <td>Staff</td>
-            <td>Venue</td>
-            <td><input type="Button" value="View"></td>
+            <th>User</th>
+            <th>Staff</th>
+            <th>Venue</th>
+            <th>Action</th>
         </tr>
+        
+        {% for d in app_data %}
+         <tr>
+            <td>{{d.uname}}</td>
+            <td>{{d.sname}}</td>
+            <td>{{d.vname}}</td>
+            <td><input type="Button" value="View"></td>
+         </tr>
+        {% endfor %}
 
-        <tr>
-            <td>User</td>
-            <td>Staff</td>
-            <td>Venue</td>
-            <td><input type="Button" value="View"></td>
-        </tr>
 
         </table>
         </form>
     </div>
-    
-<div class="center">Copy rights reserverd to Jurrassic Trekking Services, 2026</div>
- </div>
-</body>
-</html>
+
+{% endblock %}

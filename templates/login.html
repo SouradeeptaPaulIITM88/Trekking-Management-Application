@@ -1,18 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/main.css">
-    <title>Login</title>
-</head>
-<body>
- <div class="container">
-    <div class="center" >
-        <h2>Welcome to Jurrassic Trekking Services !</h2>
-    </div>
-
-
+{% extends "base.html" %}
+{% block content %}
     <div class="input-form">
         <form>
         <h3 class="center">Login</h3><br>
@@ -22,8 +9,8 @@
             <td><input type="email" name="email-id" placeholder="Enter your email id"></td>
         </tr>
         <tr>
-            <td><label>User Name :</label></td>
-            <td><input type="text" name="user-name" placeholder="Enter your user name"></td>
+            <td><label>Password :</label></td>
+            <td><input type="password" name="password" placeholder="Enter yourpassword"></td>
         </tr>
         <tr>
             <td><input type="submit" value="Login"></td>
@@ -32,6 +19,4 @@
         </table>
         </form>
     </div>
- </div>
-</body>
-</html>
+{% endblock %}
