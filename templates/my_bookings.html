@@ -28,7 +28,15 @@
             <td>{{b.booking_date}}</td>
             <td>{{b.booking_status}}</td>
             <td>{{b.payment_status}}</td>
-            <td><a href="/user/trek/{{b.trek.trek_id}}">View Details</a></td>
+            <td>
+                <a href="/user/trek/{{b.trek.trek_id}}">View Details</a>
+                {% if b.booking_status == 'Booked' %}
+                |
+                <form method="POST" action="/user/cancel_booking/{{b.booking_id}}" style="display:inline;">
+                    <input type="submit" value="Cancel">
+                </form>
+                {% endif %}
+            </td>
         </tr>
         {% else %}
         <tr><td colspan="5">You haven't booked any treks yet</td></tr>

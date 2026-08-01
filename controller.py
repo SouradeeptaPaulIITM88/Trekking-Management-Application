@@ -248,6 +248,9 @@ def staff_trek(trek_id):
     return redirect(url_for('staff_dashboard'))
 
   if request.method == "POST":
+    if this_trek.status == "Completed":
+      return redirect(url_for('staff_trek', trek_id=trek_id))
+    
     this_trek.available_slots = request.form.get("available_slots")
     new_status = request.form.get("status")
     this_trek.status = new_status
@@ -292,6 +295,8 @@ def user_dashboard():
   if session.get('role') != 'Trekker':
     return redirect(url_for('signin'))
 
+  my_profile = trekker.query.filter_by(user_id=session['uid']).first()
+
   # search/filter treks based on difficulty and location - was missing before
   difficulty = request.args.get('difficulty', '')
   location = request.args.get('location', '')
@@ -303,7 +308,10 @@ def user_dashboard():
     q = q.filter(trek.location.contains(location))
   available_treks = q.all()
 
-  my_profile = trekker.query.filter_by(user_id=session['uid']).first()
+  if my_profile and my_profile.preferred_difficulty and not difficulty:
+    preferred = my_profile.preferred_difficulty
+    available_treks.sort(key=lambda t: 0 if t.difficulty == preferred else 1)
+
   my_bookings = my_profile.bookings if my_profile else []
   return render_template("user_dashboard.html", available_treks=available_treks, my_bookings=my_bookings,
                           difficulty=difficulty, location=location)
@@ -359,6 +367,18 @@ def my_bookings():
   bookings_list = my_profile.bookings if my_profile else []
   return render_template("my_bookings.html", bookings_list=bookings_list)
 
+@app.route("/user/cancel_booking/<int:booking_id>", methods=["POST"])
+def cancel_booking(booking_id):
+  if session.get('role')!= 'Trekker':
+    return redirect(url_for('signin'))
+  my_profile =  trekker.query.filter_by(user_id=session['uid']).first()
+  this_booking = booking.query.get(booking_id)
+
+  if this_booking and my_profile and this_booking.trekker_id == my_profile.trekker_id and this_booking.booking_status == "Booked":
+    this_booking.booking_status = "Cancelled"
+    this_booking.trek.available_slots += 1
+    db.session.commit()
+  return redirect(url_for('my_bookings'))
 
 @app.route("/user/history")
 def user_history():

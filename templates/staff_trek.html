@@ -20,6 +20,7 @@
         </table>
         <br>
 
+        {% if this_trek.status != "Completed" %}
         <form method="POST" action="/staff/trek/{{this_trek.trek_id}}">
         <table class="center">
         <tr>
@@ -41,6 +42,9 @@
         </tr>
         </table>
         </form>
+        {% else %}
+        <p class = "center">This trek has been completed and can no longer be modified.</p>
+        {% endif %}
 
         <table class="center" name="Participants" border="1">
         <caption>Participants ({{this_trek.bookings|length}})</caption>
