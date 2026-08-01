@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/main.css">
-    <title>User Details</title>
+    <title>Booking Details</title>
 </head>
 <body>
  <div class="container">
@@ -13,49 +13,50 @@
     </div>
 
     <div style="text-align: right;">
-        <button onclick="window.location.href='admin_dashboard.html'">
+        <button onclick="window.location.href='/admin/'">
             Back
         </button>
     </div>
 
     <div class="dashboard-form">
-        <form>
-        <h3 class="center">Admin Dashboard</h3><br>
+        <h3 class="center">Booking Details</h3><br>
 
         <div style="text-align: left;">
          <table class="center" name="User Record" style="margin-left: 0; margin-right: auto">
          <caption><b>Booking Details</b></caption>
          <tr>
             <td>User Name</td>
-            <td>xxxx</td>
+            <td>{{this_booking.trekker.user.full_name}}</td>
          </tr>
 
          <tr>
-            <td>Staff Name</td>
-            <td>xxxx</td>
+            <td>Trek Name</td>
+            <td>{{this_booking.trek.trek_name}}</td>
          </tr>
 
          <tr>
-            <td>Staff Position</td>
-            <td>xxxx</td>
+            <td>Assigned Staff</td>
+            <td>{{this_booking.trek.assigned_staff.user.full_name if this_booking.trek.assigned_staff else 'Not Assigned'}}</td>
          </tr>
 
         </table>
         </div>
 
-        <table class="center" name="Users Record Details">
-        <caption>Booking History</caption>
+        <table class="center" name="Booking Info" border="1">
+        <caption>Booking Info</caption>
         <tr>
-            <td>Booking ID</td>
-            <td>User ID</td>
-            <td>Trek ID</td>
-            <td>Booking Date</td>
-            <td>Status</td>
-            <td>Feedback</td>
-
+            <th>Booking ID</th>
+            <th>Booking Date</th>
+            <th>Status</th>
+            <th>Payment Status</th>
+        </tr>
+        <tr>
+            <td>{{this_booking.booking_id}}</td>
+            <td>{{this_booking.booking_date}}</td>
+            <td>{{this_booking.booking_status}}</td>
+            <td>{{this_booking.payment_status}}</td>
         </tr>
         </table>
-        </form>
     </div>
     
 <div class="center">Copy rights reserverd to Jurrassic Trekking Services, 2026</div>

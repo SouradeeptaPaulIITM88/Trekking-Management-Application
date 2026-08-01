@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/main.css">
-    <title>Register</title>
+    <title>Edit Staff Details</title>
 </head>
 <body>
  <div class="container">
@@ -12,31 +12,30 @@
         <h2>Welcome to Jurrassic Trekking Services !</h2>
     </div>
 
+    <div class="navlinks">
+        <a href="/staff/">Dashboard</a> |
+        <a href="/staff/profile">Profile</a> |
+        <a href="/logout">Logout</a>
+    </div>
+
     <div class="input-form">
-        <form>
-        <h3 class="center">Edit Doctor Details</h3><br>
+        <form method="POST" action="/staff/profile">
+        <h3 class="center">Edit Staff Details</h3><br>
         <table class="center">
         <tr>
-            <td><label>Staff Name :</label> :</label></td>
-            <td><input type="text" name="s_name" placeholder="Enter your staff name"></td>
-        </tr>
-        <tr>
-        <tr>
-            <td><label>Department :</label></td>
-            <td><input type="text" name="dept" placeholder="Enter your department"></td>
+            <td><label>Dinosaur Speciality :</label></td>
+            <td><input type="text" name="dino_speciality" value="{{my_profile.dino_speciality if my_profile else ''}}" placeholder="Enter your specialization"></td>
         </tr>
 
         <tr>
-            <td><label>Experience :</label></td>
-            <td><input type="text" name="exp" placeholder="Enter your years of Experience"></td>
+            <td><label>Experience (Years) :</label></td>
+            <td><input type="text" name="experience_years" value="{{my_profile.experience_years if my_profile else ''}}" placeholder="Enter your years of experience"></td>
         </tr>
 
         <tr>
-            <td><label>Address :</label></td>
-            <td><textarea rows=5 cols=20 name="address" placeholder="Enter your address"></textarea></td>
+            <td><label>Contact :</label></td>
+            <td><input type="text" name="contact" value="{{my_profile.contact if my_profile else ''}}" placeholder="Enter your contact number"></td>
         </tr>
-
-        
 
         <tr>
             <td><input type="submit" value="Update"></td>

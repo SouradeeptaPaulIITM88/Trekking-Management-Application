@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="navlinks">
+        <a href="/admin/">Dashboard</a> |
+        <a href="/admin/treks">Treks</a> |
+        <a href="/admin/staff">Staff</a> |
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="dashboard-form">
+        <h3 class="center">Manage Treks</h3><br>
+
+        <div style="text-align: right;">
+            <form method="GET" action="/admin/treks" style="display:inline;">
+                <input type="text" name="q" value="{{q}}" placeholder="Search trek name">
+                <input type="submit" value="Search">
+            </form>
+            <a href="/admin/trek_form"><input type="button" value="+ Add New Trek"></a>
+        </div>
+
+        <table class="center" name="Treks" border="1">
+        <caption>Treks</caption>
+        <tr>
+            <th>ID</th>
+            <th>Trek Name</th>
+            <th>Location</th>
+            <th>Difficulty</th>
+            <th>Slots</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+
+        {% for t in treks_list %}
+        <tr>
+            <td>{{t.trek_id}}</td>
+            <td>{{t.trek_name}}</td>
+            <td>{{t.location}}</td>
+            <td>{{t.difficulty}}</td>
+            <td>{{t.available_slots}}</td>
+            <td>{{t.status}}</td>
+            <td><a href="/admin/trek_form?trek_id={{t.trek_id}}"><input type="button" value="Edit"></a></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="7">No treks added yet</td></tr>
+        {% endfor %}
+
+        </table>
+    </div>
+
+{% endblock %}

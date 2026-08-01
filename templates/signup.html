@@ -13,16 +13,16 @@
     </div>
 
     <div class="input-form">
-        <form>
+        <form  method="POST" action="/register">
         <h3 class="center">Register new user</h3><br>
         <table class="center">
         <tr>
-            <td><label>Email Id :</label></td>
-            <td><input type="email" name="email-id" placeholder="Enter your email id"></td>
+            <td><label>Full Name :</label></td>
+            <td><input type="text" name="full_name" placeholder="Enter your full name"></td>
         </tr>
         <tr>
-            <td><label>User Name :</label></td>
-            <td><input type="text" name="user-name" placeholder="Enter your user name"></td>
+            <td><label>Email Id :</label></td>
+            <td><input type="email" name="email-id" placeholder="Enter your email id"></td>
         </tr>
 
         <tr>
@@ -33,27 +33,87 @@
         <tr>
             <td><label>User Type :</label></td>
             <td>
-                <select name="uType">
+                <select name="uType" onchange="toggleStaffDetails()">
                     <option value="None" selected>None</option>
-                    <option value="Trekking Staff">Trekking Staff</option>
-                    <option value="User(Trekker)">User(Trekker)</option>
+                    <option value="Staff">Trekking Staff</option>
+                    <option value="Trekker">Trekker</option>
                 </select>
             </td>
         </tr>
-        <tr>
-            <td><label>Speacialization :</label></td>
-            <td><input type="text" name="position" placeholder="Enter your position"></td>
-        </tr>
-        <tr>
+
+        <!-- shown only when uType = Staff, maps to staff_profile table -->
+        <tbody id="staff_details" style="display : none;">
+         <tr>
+            <td><label>Dinosaur Speciality :</label></td>
+            <td><input type="text" name="dino_speciality" placeholder="e.g. Velociraptor, T-Rex, Triceratops"></td>
+         </tr>
+
+         <tr>
+            <td><label>Experience(in years) :</label></td>
+            <td><input type="text" name="experience_years" placeholder="Enter your experience"></td>
+         </tr>
+
+         <tr>
+            <td><label>Contact Number :</label></td>
+            <td><input type="text" name="contact" placeholder="Enter your contact number"></td>
+         </tr>
+        </tbody>
+
+        <!-- shown only when uType = Trekker, maps to trekker table -->
+        <tbody id="trekker_details" style="display : none;">
+         <tr>
             <td><label>Address :</label></td>
             <td><textarea rows=5 cols=20 name="address" placeholder="Enter your address"></textarea></td>
-        </tr>
+         </tr>
+
+         <tr>
+            <td><label>Emergency Contact :</label></td>
+            <td><input type="text" name="emergency_contact" placeholder="Enter emergency contact number"></td>
+         </tr>
+
+         <tr>
+            <td><label>Preferred Difficulty :</label></td>
+            <td>
+                <select name="preferred_difficulty">
+                    <option value="Easy">Easy</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="Hard">Hard</option>
+                </select>
+            </td>
+         </tr>
+        </tbody>
+
         <tr>
             <td><input type="submit" value="Signup"></td>
-            <td><a href="login.html">Existing User?</a></td>
+            <td><a href="/login/">Existing User?</a></td>
         </tr>
+
+        <tr>
+            <td colspan="2" class="center"><a href="/"><input type="button" value="Home"></a></td>
+        </tr>
+
         </table>
+        <h6 class="center">{{error_msg}}</h6>
         </form>
+
+        <script>
+            // shows staff_details table rows if Staff is picked, trekker_details if Trekker is picked
+            function toggleStaffDetails(){
+                const uType = document.getElementsByName("uType")[0];
+                const staff_details = document.getElementById("staff_details");
+                const trekker_details = document.getElementById("trekker_details");
+
+                staff_details.style.display = "none";
+                trekker_details.style.display = "none";
+
+                if(uType.value === "Staff"){
+                    staff_details.style.display = "table-row-group";
+                }
+                else if(uType.value === "Trekker"){
+                    trekker_details.style.display = "table-row-group";
+                }
+            }
+        </script>
     </div>
     
 <div class="center">Copy rights reserverd to Jurrassic Trekking Services, 2026</div>

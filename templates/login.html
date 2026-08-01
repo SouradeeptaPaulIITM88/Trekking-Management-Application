@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="input-form">
-        <form>
+        <form action="/login/" method="POST">
         <h3 class="center">Login</h3><br>
         <table class="center">
         <tr>
@@ -10,11 +10,17 @@
         </tr>
         <tr>
             <td><label>Password :</label></td>
-            <td><input type="password" name="password" placeholder="Enter yourpassword"></td>
+            <td><input type="password" name="password" placeholder="Enter your password"></td>
         </tr>
         <tr>
             <td><input type="submit" value="Login"></td>
-            <td><a href="signup.html">New User?</a></td>
+            <td><a href="/register">New User?</a></td>
+        </tr>
+        <tr>
+            <td colspan="2" class=""center><a href="/"><input type="button" value="Home"></a></td>
+        </tr>
+        <tr>
+            <td colspan="2"><h6>{{error_msg}}</h6></td>
         </tr>
         </table>
         </form>

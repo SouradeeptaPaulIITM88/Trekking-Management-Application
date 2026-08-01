@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="navlinks">
+        <a href="/admin/">Dashboard</a> |
+        <a href="/admin/treks">Treks</a> |
+        <a href="/admin/staff">Staff</a> |
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="input-form">
+        <form method="POST" action="/admin/trek_form{{ '?trek_id=' ~ edit_trek.trek_id if edit_trek else '' }}">
+        <h3 class="center">{{ 'Edit Trek' if edit_trek else 'Add New Trek' }}</h3><br>
+        <table class="center">
+        <tr>
+            <td><label>Trek Name :</label></td>
+            <td><input type="text" name="trek_name" value="{{edit_trek.trek_name if edit_trek else ''}}"></td>
+        </tr>
+        <tr>
+            <td><label>Location :</label></td>
+            <td><input type="text" name="location" value="{{edit_trek.location if edit_trek else ''}}"></td>
+        </tr>
+        <tr>
+            <td><label>Difficulty :</label></td>
+            <td>
+                <select name="difficulty">
+                    <option value="Easy" {{'selected' if edit_trek and edit_trek.difficulty=='Easy'}}>Easy</option>
+                    <option value="Moderate" {{'selected' if edit_trek and edit_trek.difficulty=='Moderate'}}>Moderate</option>
+                    <option value="Hard" {{'selected' if edit_trek and edit_trek.difficulty=='Hard'}}>Hard</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label>Duration (Days) :</label></td>
+            <td><input type="text" name="duration_days" value="{{edit_trek.duration_days if edit_trek else ''}}"></td>
+        </tr>
+        <tr>
+            <td><label>Start Date :</label></td>
+            <td><input type="date" name="start_date" value="{{edit_trek.start_date if edit_trek else ''}}"></td>
+        </tr>
+        <tr>
+            <td><label>End Date :</label></td>
+            <td><input type="date" name="end_date" value="{{edit_trek.end_date if edit_trek else ''}}"></td>
+        </tr>
+        <tr>
+            <td><label>Available Slots :</label></td>
+            <td><input type="text" name="available_slots" value="{{edit_trek.available_slots if edit_trek else ''}}"></td>
+        </tr>
+        <tr>
+            <td><label>Assign Staff :</label></td>
+            <td>
+                <select name="assigned_staff_id">
+                    <option value="">-- Select Staff --</option>
+                    {% for s in staff_list %}
+                    <option value="{{s.staff_id}}" {{'selected' if edit_trek and edit_trek.assigned_staff_id==s.staff_id}}>{{s.user.full_name}}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label>Status :</label></td>
+            <td>
+                <select name="status">
+                    {% for st in ['Pending','Approved','Open','Closed','Completed'] %}
+                    <option value="{{st}}" {{'selected' if edit_trek and edit_trek.status==st}}>{{st}}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td><input type="submit" value="Save"></td>
+            <td><a href="/admin/treks">Cancel</a></td>
+        </tr>
+        </table>
+        </form>
+    </div>
+
+{% endblock %}

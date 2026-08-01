@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="navlinks">
+        <a href="/staff/">Dashboard</a> |
+        <a href="/staff/profile">Profile</a> |
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="dashboard-form">
+        <h3 class="center">{{this_trek.trek_name}}</h3><br>
+
+        <table class="center" name="Trek Info" border="1">
+        <caption>Trek Information</caption>
+        <tr><td>Location</td><td>{{this_trek.location}}</td></tr>
+        <tr><td>Duration</td><td>{{this_trek.duration_days}} Days</td></tr>
+        <tr><td>Start Date</td><td>{{this_trek.start_date}}</td></tr>
+        <tr><td>End Date</td><td>{{this_trek.end_date}}</td></tr>
+        <tr><td>Status</td><td>{{this_trek.status}}</td></tr>
+        </table>
+        <br>
+
+        <form method="POST" action="/staff/trek/{{this_trek.trek_id}}">
+        <table class="center">
+        <tr>
+            <td><label>Available Slots :</label></td>
+            <td><input type="text" name="available_slots" value="{{this_trek.available_slots}}"></td>
+        </tr>
+        <tr>
+            <td><label>Status :</label></td>
+            <td>
+                <select name="status">
+                    {% for st in ['Open','Closed','Ongoing','Completed'] %}
+                    <option value="{{st}}" {{'selected' if this_trek.status==st}}>{{st}}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Update Trek"></td>
+        </tr>
+        </table>
+        </form>
+
+        <table class="center" name="Participants" border="1">
+        <caption>Participants ({{this_trek.bookings|length}})</caption>
+        <tr>
+            <th>User Name</th>
+            <th>Booking Date</th>
+            <th>Status</th>
+        </tr>
+        {% for b in this_trek.bookings %}
+        <tr>
+            <td>{{b.trekker.user.full_name}}</td>
+            <td>{{b.booking_date}}</td>
+            <td>{{b.booking_status}}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="3">No participants yet</td></tr>
+        {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}

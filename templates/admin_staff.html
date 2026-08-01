@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="navlinks">
+        <a href="/admin/">Dashboard</a> |
+        <a href="/admin/treks">Treks</a> |
+        <a href="/admin/staff">Staff</a> |
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="dashboard-form">
+        <h3 class="center">Staff Requests</h3><br>
+
+        <div class="center">
+            <a href="/admin/staff?tab=Pending">Pending</a> |
+            <a href="/admin/staff?tab=Approved">Approved</a> |
+            <a href="/admin/staff?tab=Rejected">Rejected</a>
+        </div>
+        <br>
+
+        <table class="center" name="Staff Requests" border="1">
+        <caption>{{tab}} Staff</caption>
+        <tr>
+            <th>Staff ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+
+        {% for s in staff_list %}
+        <tr>
+            <td>{{s.staff_id}}</td>
+            <td>{{s.user.full_name}}</td>
+            <td>{{s.user.email}}</td>
+            <td>{{s.contact}}</td>
+            <td>{{s.approval_status}}</td>
+            <td>
+                <form method="POST" action="/admin/staff/approve/{{s.staff_id}}" style="display:inline;">
+                    <input type="submit" value="Approve">
+                </form>
+                <form method="POST" action="/admin/staff/reject/{{s.staff_id}}" style="display:inline;">
+                    <input type="submit" value="Reject">
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6">No {{tab}} staff requests</td></tr>
+        {% endfor %}
+
+        </table>
+    </div>
+
+{% endblock %}

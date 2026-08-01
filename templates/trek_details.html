@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="navlinks">
+        <a href="/user/">Dashboard</a> |
+        <a href="/user/bookings">My Bookings</a> |
+        <a href="/user/history">History</a> |
+        <a href="/user/profile">Profile</a> |
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div style="text-align: right;">
+        <a href="/user/"><input type="button" value="Back to Treks"></a>
+    </div>
+
+    <div class="dashboard-form">
+        <h3 class="center">{{this_trek.trek_name}}</h3><br>
+
+        <table class="center" name="Trek Details" border="1">
+        <caption>Trek Details</caption>
+        <tr><td>Location</td><td>{{this_trek.location}}</td></tr>
+        <tr><td>Difficulty</td><td>{{this_trek.difficulty}}</td></tr>
+        <tr><td>Duration</td><td>{{this_trek.duration_days}} Days</td></tr>
+        <tr><td>Start Date</td><td>{{this_trek.start_date}}</td></tr>
+        <tr><td>End Date</td><td>{{this_trek.end_date}}</td></tr>
+        <tr><td>Available Slots</td><td>{{this_trek.available_slots}}</td></tr>
+        <tr><td>Status</td><td>{{this_trek.status}}</td></tr>
+        </table>
+        <br>
+
+        <form method="POST" action="/user/trek/{{this_trek.trek_id}}">
+            <input type="submit" value="Book Now">
+        </form>
+        <h6 class="center">{{error_msg}}</h6>
+    </div>
+
+{% endblock %}

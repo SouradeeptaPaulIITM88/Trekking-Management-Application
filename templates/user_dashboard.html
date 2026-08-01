@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="navlinks">
+        <a href="/user/">Dashboard</a> |
+        <a href="/user/bookings">My Bookings</a> |
+        <a href="/user/history">History</a> |
+        <a href="/user/profile">Profile</a> |
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="dashboard-form">
+        <h3 class="center">Available Treks</h3><br>
+
+        <form method="GET" action="/user/" style="text-align:right;">
+            <select name="difficulty">
+                <option value="">Difficulty: All</option>
+                <option value="Easy" {{'selected' if difficulty=='Easy'}}>Easy</option>
+                <option value="Moderate" {{'selected' if difficulty=='Moderate'}}>Moderate</option>
+                <option value="Hard" {{'selected' if difficulty=='Hard'}}>Hard</option>
+            </select>
+            <input type="text" name="location" value="{{location}}" placeholder="Location">
+            <input type="submit" value="Filter">
+        </form>
+
+        <table class="center" name="Available Treks" border="1">
+        <caption>Available Treks</caption>
+        <tr>
+            <th>Trek Name</th>
+            <th>Location</th>
+            <th>Difficulty</th>
+            <th>Duration</th>
+            <th>Available Slots</th>
+            <th>Action</th>
+        </tr>
+
+        {% for t in available_treks %}
+        <tr>
+            <td>{{t.trek_name}}</td>
+            <td>{{t.location}}</td>
+            <td>{{t.difficulty}}</td>
+            <td>{{t.duration_days}} Days</td>
+            <td>{{t.available_slots}}</td>
+            <td><a href="/user/trek/{{t.trek_id}}"><input type="button" value="Book Now"></a></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6">No treks available right now</td></tr>
+        {% endfor %}
+
+        </table>
+
+        <table class="center" name="My Bookings" border="1">
+        <caption>My Bookings</caption>
+        <tr>
+            <th>Trek Name</th>
+            <th>Booking Date</th>
+            <th>Status</th>
+        </tr>
+        {% for b in my_bookings %}
+        <tr>
+            <td>{{b.trek.trek_name}}</td>
+            <td>{{b.booking_date}}</td>
+            <td>{{b.booking_status}}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="3">No bookings yet</td></tr>
+        {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}

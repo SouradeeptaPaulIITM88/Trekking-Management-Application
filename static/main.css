@@ -26,3 +26,28 @@
   font-size: 14px;
   text-align: justify;
 }
+
+/* ===== new, kept minimal ===== */
+
+/* simple horizontal nav bar used on all dashboard pages instead of a full sidebar */
+.navlinks{
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+.navlinks a{
+  margin: 0 6px;
+}
+
+/* small stat boxes for admin/staff dashboards (Total Treks, Total Users, etc) */
+.stat-box{
+  display: inline-block;
+  border: 1px solid blue;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin: 5px;
+  text-align: center;
+}
+.stat-box b{
+  font-size: 20px;
+}

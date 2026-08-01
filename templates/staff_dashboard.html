@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="navlinks">
+        <a href="/staff/">Dashboard</a> |
+        <a href="/staff/profile">Profile</a> |
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="dashboard-form">
+        <h3 class="center">My Dashboard</h3><br>
+
+        <div class="center">
+            <div class="stat-box">Assigned Treks<br><b>{{my_treks|length}}</b></div>
+        </div>
+        <br>
+
+        <table class="center" name="My Treks" border="1">
+        <caption>My Assigned Treks</caption>
+        <tr>
+            <th>Trek Name</th>
+            <th>Location</th>
+            <th>Participants</th>
+            <th>Slots</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+
+        {% for t in my_treks %}
+        <tr>
+            <td>{{t.trek_name}}</td>
+            <td>{{t.location}}</td>
+            <td>{{t.bookings|length}}</td>
+            <td>{{t.available_slots}}</td>
+            <td>{{t.status}}</td>
+            <td><a href="/staff/trek/{{t.trek_id}}"><input type="button" value="Manage"></a></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6">No treks assigned yet</td></tr>
+        {% endfor %}
+
+        </table>
+    </div>
+
+{% endblock %}

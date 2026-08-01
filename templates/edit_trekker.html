@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/main.css">
+    <title>Edit Profile</title>
+</head>
+<body>
+ <div class="container">
+    <div class="center" >
+        <h2>Welcome to Jurrassic Trekking Services !</h2>
+    </div>
+
+    <div class="navlinks">
+        <a href="/user/">Dashboard</a> |
+        <a href="/user/bookings">My Bookings</a> |
+        <a href="/user/history">History</a> |
+        <a href="/user/profile">Profile</a> |
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="input-form">
+        <form method="POST" action="/user/profile">
+        <h3 class="center">Edit My Profile</h3><br>
+        <table class="center">
+        <tr>
+            <td><label>Address :</label></td>
+            <td><textarea rows=5 cols=20 name="address" placeholder="Enter your address">{{my_profile.address if my_profile else ''}}</textarea></td>
+        </tr>
+
+        <tr>
+            <td><label>Emergency Contact :</label></td>
+            <td><input type="text" name="emergency_contact" value="{{my_profile.emergency_contact if my_profile else ''}}" placeholder="Enter emergency contact number"></td>
+        </tr>
+
+        <tr>
+            <td><label>Preferred Difficulty :</label></td>
+            <td>
+                <select name="preferred_difficulty">
+                    <option value="Easy" {{'selected' if my_profile and my_profile.preferred_difficulty=='Easy'}}>Easy</option>
+                    <option value="Moderate" {{'selected' if my_profile and my_profile.preferred_difficulty=='Moderate'}}>Moderate</option>
+                    <option value="Hard" {{'selected' if my_profile and my_profile.preferred_difficulty=='Hard'}}>Hard</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td><input type="submit" value="Update"></td>
+        </tr>
+        </table>
+        </form>
+    </div>
+    
+<div class="center">Copy rights reserverd to Jurrassic Trekking Services, 2026</div>
+ </div>
+</body>
+</html>

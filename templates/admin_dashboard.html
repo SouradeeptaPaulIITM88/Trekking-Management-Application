@@ -1,66 +1,100 @@
 {% extends "base.html" %}
 {% block content %}
 
+    <div class="navlinks">
+        <a href="/admin/">Dashboard</a> |
+        <a href="/admin/treks">Treks</a> |
+        <a href="/admin/staff">Staff</a> |
+        <a href="/logout">Logout</a>
+    </div>
+
     <div class="dashboard-form">
-        <form>
         <h3 class="center">Admin Dashboard</h3><br>
+
+        <!-- stat cards, matches wireframe -->
+        <div class="center">
+            <div class="stat-box">Total Treks<br><b>{{total_treks}}</b></div>
+            <div class="stat-box">Total Users<br><b>{{total_users}}</b></div>
+            <div class="stat-box">Total Staff<br><b>{{total_staff}}</b></div>
+            <div class="stat-box">Total Bookings<br><b>{{total_bookings}}</b></div>
+        </div>
+        <br>
+
+        <form method="GET" action="/admin/" style="text-align:right;">
+            <input type="text" name="q" value="{{q}}" placeholder="Search staff/user by name or ID">
+            <input type="submit" value="Search">
+        </form>
+        <br>
+
         <table class="center" name="Staff" border="1">
         <caption>Registered Staff</caption>
         <tr>
-            <td>Staff Name</td>
-            <td><input type="Button" value="Edit"></td>
-            <td><input type="Button" value="Delete"></td>
-            <td><input type="Button" value="Blacklist"></td>
+            <th>Staff Name</th>
+            <th>Status</th>
+            <th>Action</th>
         </tr>
-
+        {% for s in staff_list %}
         <tr>
-            <td>Staff Name</td>
-            <td><input type="Button" value="Edit"></td>
-            <td><input type="Button" value="Delete"></td>
-            <td><input type="Button" value="Blacklist"></td>
+            <td>{{s.full_name}}</td>
+            <td>{{s.status}}</td>
+            <td>
+                <form method="POST" action="/toggle_status/{{s.user_id}}" style="display:inline;">
+                    <input type="submit" value="{{ 'Blacklist' if s.status=='Active' else 'Activate' }}">
+                </form>
+            </td>
         </tr>
-
+        {% else %}
+        <tr><td colspan="3">No staff registered yet</td></tr>
+        {% endfor %}
         </table>
 
         <table class="center" name="Users" border="1">
         <caption>Registered Users</caption>
         <tr>
-            <td>User Name</td>
-            <td><input type="Button" value="Edit"></td>
-            <td><input type="Button" value="Delete"></td>
-            <td><input type="Button" value="Blacklist"></td>
-        </tr>
-
-        <tr>
-            <td>User Name</td>
-            <td><input type="Button" value="Edit"></td>
-            <td><input type="Button" value="Delete"></td>
-            <td><input type="Button" value="Blacklist"></td>
-        </tr>
-
-        </table>
-
-        <table class="center" name="Registrations" border="1">
-        <caption>Upcoming Registrations</caption>
-        <tr>
-            <th>User</th>
-            <th>Staff</th>
-            <th>Venue</th>
+            <th>User Name</th>
+            <th>Status</th>
             <th>Action</th>
         </tr>
-        
-        {% for d in app_data %}
+        {% for u in trekker_list %}
+        <tr>
+            <td>{{u.full_name}}</td>
+            <td>{{u.status}}</td>
+            <td>
+                <form method="POST" action="/toggle_status/{{u.user_id}}" style="display:inline;">
+                    <input type="submit" value="{{ 'Blacklist' if u.status=='Active' else 'Activate' }}">
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="3">No users registered yet</td></tr>
+        {% endfor %}
+        </table>
+
+        <table class="center" name="Recent Bookings" border="1">
+        <caption>Recent Bookings</caption>
+        <tr>
+            <th>Booking ID</th>
+            <th>User</th>
+            <th>Trek</th>
+            <th>Booking Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+
+        {% for b in recent_bookings %}
          <tr>
-            <td>{{d.uname}}</td>
-            <td>{{d.sname}}</td>
-            <td>{{d.vname}}</td>
-            <td><input type="Button" value="View"></td>
+            <td>{{b.booking_id}}</td>
+            <td>{{b.trekker.user.full_name}}</td>
+            <td>{{b.trek.trek_name}}</td>
+            <td>{{b.booking_date}}</td>
+            <td>{{b.booking_status}}</td>
+            <td><a href="/admin/booking/{{b.booking_id}}">View</a></td>
          </tr>
+        {% else %}
+        <tr><td colspan="6">No bookings yet</td></tr>
         {% endfor %}
 
-
         </table>
-        </form>
     </div>
 
 {% endblock %}

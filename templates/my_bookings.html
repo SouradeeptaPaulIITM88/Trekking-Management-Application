@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="navlinks">
+        <a href="/user/">Dashboard</a> |
+        <a href="/user/bookings">My Bookings</a> |
+        <a href="/user/history">History</a> |
+        <a href="/user/profile">Profile</a> |
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="dashboard-form">
+        <h3 class="center">My Bookings</h3><br>
+
+        <table class="center" name="My Bookings" border="1">
+        <caption>My Bookings</caption>
+        <tr>
+            <th>Trek Name</th>
+            <th>Booking Date</th>
+            <th>Status</th>
+            <th>Payment Status</th>
+            <th>Action</th>
+        </tr>
+
+        {% for b in bookings_list %}
+        <tr>
+            <td>{{b.trek.trek_name}}</td>
+            <td>{{b.booking_date}}</td>
+            <td>{{b.booking_status}}</td>
+            <td>{{b.payment_status}}</td>
+            <td><a href="/user/trek/{{b.trek.trek_id}}">View Details</a></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5">You haven't booked any treks yet</td></tr>
+        {% endfor %}
+
+        </table>
+    </div>
+
+{% endblock %}
