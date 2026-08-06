@@ -1,7 +1,7 @@
 from flask import current_app as  app
 from flask import render_template , request , redirect , url_for , session
 from models import *
-from datetime import datetime
+from datetime import datetime , timedelta
 
 @app.route("/")
 def home():
@@ -170,18 +170,20 @@ def trek_form():
       edit_trek.difficulty = request.form.get("difficulty")
       edit_trek.duration_days = request.form.get("duration_days")
       edit_trek.start_date = datetime.strptime(request.form.get("start_date"), "%Y-%m-%d").date()
-      edit_trek.end_date = datetime.strptime(request.form.get("end_date"), "%Y-%m-%d").date()
+      edit_trek.end_date = edit_trek.start_date + timedelta(days=int(edit_trek.duration_days))
       edit_trek.available_slots = request.form.get("available_slots")
       edit_trek.assigned_staff_id = request.form.get("assigned_staff_id") or None
       edit_trek.status = request.form.get("status")
     else:
+      new_start_date = datetime.strptime(request.form.get("start_date"), "%Y-%m-%d").date()
+      new_duration = int(request.form.get("duration_days"))
       new_trek = trek(
         trek_name=request.form.get("trek_name"),
         location=request.form.get("location"),
         difficulty=request.form.get("difficulty"),
-        duration_days=request.form.get("duration_days"),
-        start_date=datetime.strptime(request.form.get("start_date"), "%Y-%m-%d").date(),
-        end_date=datetime.strptime(request.form.get("end_date"), "%Y-%m-%d").date(),
+        duration_days=new_duration,
+        start_date=new_start_date,
+        end_date=new_start_date + timedelta(days=new_duration),
         available_slots=request.form.get("available_slots"),
         assigned_staff_id=request.form.get("assigned_staff_id") or None,
         status=request.form.get("status")
