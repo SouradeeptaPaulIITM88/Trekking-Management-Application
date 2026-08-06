@@ -58,6 +58,7 @@ class trek(db.Model):
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
     available_slots = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Float, nullable=False, default=0)    
     assigned_staff_id = db.Column(db.Integer, db.ForeignKey('staff_profile.staff_id'))
     status = db.Column(db.String, nullable=False, default="Pending")
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)

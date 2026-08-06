@@ -28,9 +28,24 @@
         </table>
         <br>
 
-        <form method="POST" action="/user/trek/{{this_trek.trek_id}}">
-            <input type="submit" value="Book Now">
-        </form>
+        <input type="button" value="Book Now" onclick="document.getElementById('popup1').style.display='block'">
+
+        <div id="popup1" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5);">
+            <div style="background:#fff; width:280px; margin:150px auto; padding:20px; border-radius:10px; text-align:center;">
+                <h3>Continue Payment</h3>
+                <p>Amount: {{this_trek.price}}</p>
+                <input type="button" value="Continue" onclick="document.getElementById('popup1').style.display='none'; document.getElementById('popup2').style.display='block'">
+            </div>
+        </div>
+
+        <div id="popup2" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5);">
+            <div style="background:#fff; width:280px; margin:150px auto; padding:20px; border-radius:10px; text-align:center;">
+                <h3>Payment Done</h3>
+                <input type="button" value="OK" onclick="document.getElementById('bookingForm').submit()">
+            </div>
+        </div>
+
+        <form id="bookingForm" method="POST" action="/user/trek/{{this_trek.trek_id}}" style="display:none;"></form>
         <h6 class="center">{{error_msg}}</h6>
     </div>
 

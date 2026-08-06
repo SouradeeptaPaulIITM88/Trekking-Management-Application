@@ -1,5 +1,16 @@
+body{
+  background: url('background.jpg');
+  background-size: 100% 100%;
+  background-position: top center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  margin: 0;
+  min-height: 10vh;
+}
 .container{
   border: 2px solid black;
+  background: transparent;
+  min-height: 100vh;
 }
 
 .input-form{
@@ -16,7 +27,8 @@
 .center{
     text-align: center;
     margin: auto;
-    color: rgb(5 , 5 , 150);
+    color: #ffffff;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
 }
 
 .dashboard-form{
@@ -30,15 +42,20 @@
 /* ===== new, kept minimal ===== */
 
 /* simple horizontal nav bar used on all dashboard pages instead of a full sidebar */
-.navlinks{
-  text-align: center;
-  margin-bottom: 15px;
-  font-size: 14px;
-}
-.navlinks a{
-  margin: 0 6px;
+a{
+  color: #ffe66d;
+  font-weight: bold;
+  text-decoration: none;
 }
 
+a:visited{
+  color: #ffe66d;
+}
+
+a:hover{
+  color: #ffffff;
+  text-decoration: underline;
+}
 /* small stat boxes for admin/staff dashboards (Total Treks, Total Users, etc) */
 .stat-box{
   display: inline-block;

@@ -133,6 +133,23 @@ def toggle_status(user_id):
     db.session.commit()
   return redirect(url_for('admin_console'))
 
+@app.route("/admin/bookings")
+def all_bookings():
+  if session.get('role') != 'Admin':
+    return redirect(url_for('signin'))
+  q = request.args.get('q' , '')
+  bookings_query = booking.query
+  if q:
+    bookings_query = bookings_query.join(trekker).join(user).filter(user.full_name.contains(q))
+  bookings_list = bookings_query.order_by(booking.booking_date.desc()).all()
+  return render_template("admin_bookings.html", bookings_list=bookings_list, q=q)
+
+@app.route("/admin/history")
+def admin_history():
+  if session.get('role') != 'Admin':
+    return redirect(url_for('signin'))
+  history_list = trek_history.query.order_by(trek_history.completed_on.desc()).all()
+  return render_template("admin_history.html" , hsitory_list = history_list)
 
 @app.route("/admin/booking/<int:booking_id>")
 def booking_detail(booking_id):
@@ -174,6 +191,7 @@ def trek_form():
       edit_trek.available_slots = request.form.get("available_slots")
       edit_trek.assigned_staff_id = request.form.get("assigned_staff_id") or None
       edit_trek.status = request.form.get("status")
+      edit_trek.price = request.form.get("price") or 0
     else:
       new_start_date = datetime.strptime(request.form.get("start_date"), "%Y-%m-%d").date()
       new_duration = int(request.form.get("duration_days"))
@@ -186,7 +204,8 @@ def trek_form():
         end_date=new_start_date + timedelta(days=new_duration),
         available_slots=request.form.get("available_slots"),
         assigned_staff_id=request.form.get("assigned_staff_id") or None,
-        status=request.form.get("status")
+        status=request.form.get("status"),
+        price=request.form.get("price") or 0
       )
       db.session.add(new_trek)
 
@@ -336,7 +355,7 @@ def trek_details(trek_id):
     if existing:
       return render_template("trek_details.html", this_trek=this_trek, error_msg="You have already booked this trek")
 
-    new_booking = booking(trekker_id=my_profile.trekker_id, trek_id=trek_id)
+    new_booking = booking(trekker_id=my_profile.trekker_id, trek_id=trek_id , payment_status="Paid")
     this_trek.available_slots = this_trek.available_slots - 1
     db.session.add(new_booking)
     db.session.commit()

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="navlinks">
+        <a href="/admin/">Dashboard</a> |
+        <a href="/admin/treks">Treks</a> |
+        <a href="/admin/staff">Staff</a> |
+        <a href="/admin/bookings">Bookings</a> |
+        <a href="/admin/history">History</a> |
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="dashboard-form">
+        <h3 class="center">All Trekking History</h3><br>
+
+        <table class="center" name="History" border="1">
+        <caption>Trekking History</caption>
+        <tr>
+            <th>Sl No.</th>
+            <th>User</th>
+            <th>Trek Name</th>
+            <th>Completed On</th>
+            <th>Final Status</th>
+            <th>Remarks</th>
+        </tr>
+        {% for h in history_list %}
+        <tr>
+            <td>{{loop.index}}</td>
+            <td>{{h.booking.trekker.user.full_name}}</td>
+            <td>{{h.booking.trek.trek_name}}</td>
+            <td>{{h.completed_on}}</td>
+            <td>{{h.final_status}}</td>
+            <td>{{h.remarks}}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6">No trekking history yet</td></tr>
+        {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}

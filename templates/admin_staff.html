@@ -5,6 +5,8 @@
         <a href="/admin/">Dashboard</a> |
         <a href="/admin/treks">Treks</a> |
         <a href="/admin/staff">Staff</a> |
+        <a href="/admin/bookings">Bookings</a> |
+        <a href="/admin/history">History</a> |
         <a href="/logout">Logout</a>
     </div>
 
@@ -37,12 +39,14 @@
             <td>{{s.contact}}</td>
             <td>{{s.approval_status}}</td>
             <td>
+                {% if s.approval_status == 'Pending' %}
                 <form method="POST" action="/admin/staff/approve/{{s.staff_id}}" style="display:inline;">
                     <input type="submit" value="Approve">
                 </form>
                 <form method="POST" action="/admin/staff/reject/{{s.staff_id}}" style="display:inline;">
                     <input type="submit" value="Reject">
                 </form>
+                {% endif %}
             </td>
         </tr>
         {% else %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="navlinks">
+        <a href="/admin/">Dashboard</a> |
+        <a href="/admin/treks">Treks</a> |
+        <a href="/admin/staff">Staff</a> |
+        <a href="/admin/history">History</a> |
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="dashboard-form">
+        <h3 class="center">All Bookings</h3><br>
+
+        <form method="GET" action="/admin/bookings" style="text-align:right;">
+            <input type="text" name="q" value="{{q}}" placeholder="Search by user name">
+            <input type="submit" value="Search">
+        </form>
+        <br>
+
+        <table class="center" name="All Bookings" border="1">
+        <caption>All Bookings</caption>
+        <tr>
+            <th>Booking ID</th>
+            <th>User</th>
+            <th>Trek</th>
+            <th>Booking Date</th>
+            <th>Status</th>
+            <th>Payment</th>
+            <th>Action</th>
+        </tr>
+        {% for b in bookings_list %}
+        <tr>
+            <td>{{b.booking_id}}</td>
+            <td>{{b.trekker.user.full_name}}</td>
+            <td>{{b.trek.trek_name}}</td>
+            <td>{{b.booking_date}}</td>
+            <td>{{b.booking_status}}</td>
+            <td>{{b.payment_status}}</td>
+            <td><a href="/admin/booking/{{b.booking_id}}">View</a></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="7">No bookings yet</td></tr>
+        {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}
