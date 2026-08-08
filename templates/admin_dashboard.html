@@ -31,12 +31,14 @@
         <table class="center" name="Staff" border="1">
         <caption>Registered Staff</caption>
         <tr>
+            <th>ID</th>
             <th>Staff Name</th>
             <th>Status</th>
             <th>Action</th>
         </tr>
         {% for s in staff_list %}
         <tr>
+            <td>{{s.user_id}}</td>
             <td>{{s.full_name}}</td>
             <td>{{s.status}}</td>
             <td>
@@ -53,12 +55,14 @@
         <table class="center" name="Users" border="1">
         <caption>Registered Users</caption>
         <tr>
+            <th>ID</th>
             <th>User Name</th>
             <th>Status</th>
             <th>Action</th>
         </tr>
         {% for u in trekker_list %}
         <tr>
+            <td>{{u.user_id}}</td>
             <td>{{u.full_name}}</td>
             <td>{{u.status}}</td>
             <td>
