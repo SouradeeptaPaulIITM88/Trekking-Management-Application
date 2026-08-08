@@ -104,3 +104,25 @@ input[value="Search"]{
 input[value="Search"]:hover{
   background:#ffe66d;
 }
+
+input[value="Approve"]{
+  background:green;
+  color: white;
+  border: 1px solid green;
+  font-weight: bold;
+}
+
+input[value="Approve"]:hover{
+  background:greenyellow;
+}
+
+input[value="Reject"]{
+  background:red;
+  color: white;
+  border: 1px solid red;
+  font-weight: bold;
+}
+
+input[value="Reject"]:hover{
+  background:brown;
+}

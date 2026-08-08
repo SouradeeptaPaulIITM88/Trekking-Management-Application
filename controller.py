@@ -149,7 +149,7 @@ def admin_history():
   if session.get('role') != 'Admin':
     return redirect(url_for('signin'))
   history_list = trek_history.query.order_by(trek_history.completed_on.desc()).all()
-  return render_template("admin_history.html" , hsitory_list = history_list)
+  return render_template("admin_history.html" , hisitory_list = history_list)
 
 @app.route("/admin/booking/<int:booking_id>")
 def booking_detail(booking_id):
@@ -348,17 +348,17 @@ def trek_details(trek_id):
   this_trek = trek.query.get(trek_id)
   my_profile = trekker.query.filter_by(user_id=session['uid']).first()
 
-  aldready_booked = booking.query.filter_by(trekker_id=my_profile.trekker_id , trek_id=trek_id , booking_status="Booked").first();
+  aldready_booked = booking.query.filter_by(trekker_id=my_profile.trekker_id , trek_id=trek_id , booking_status="Booked").first()
 
   if request.method == "POST":
     # prevent booking a trek that is not Open, or has no slots left
     if this_trek.status != "Open" or this_trek.available_slots <= 0:
-      return render_template("trek_details.html", this_trek=this_trek, error_msg="This trek is closed or full")
+      return render_template("trek_details.html", this_trek=this_trek, aldready_booked=aldready_booked ,error_msg="This trek is closed or full")
 
     # prevent the same trekker booking the same trek twice
     existing = booking.query.filter_by(trekker_id=my_profile.trekker_id, trek_id=trek_id, booking_status="Booked").first()
     if existing:
-      return render_template("trek_details.html", this_trek=this_trek, error_msg="You have already booked this trek")
+      return render_template("trek_details.html", this_trek=this_trek, aldready_booked=aldready_booked , error_msg="You have already booked this trek")
 
     new_booking = booking(trekker_id=my_profile.trekker_id, trek_id=trek_id , payment_status="Paid")
     this_trek.available_slots = this_trek.available_slots - 1
@@ -366,7 +366,7 @@ def trek_details(trek_id):
     db.session.commit()
     return redirect(url_for('my_bookings'))
 
-  return render_template("trek_details.html", this_trek=this_trek)
+  return render_template("trek_details.html", this_trek=this_trek, aldready_booked=aldready_booked)
 
 
 @app.route("/user/profile", methods=["GET","POST"])
