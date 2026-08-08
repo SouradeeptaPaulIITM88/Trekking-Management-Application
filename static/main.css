@@ -18,9 +18,14 @@ body{
   width: 600px;
   height: 500px;
   margin: auto;
+  margin-top: 60px;
   border-radius: 10px;
   font-size: 16px;
   text-align: justify;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 
@@ -67,4 +72,35 @@ a:hover{
 }
 .stat-box b{
   font-size: 20px;
+}
+
+input[value="Blacklist"]{
+  background: #d62828;
+  color: #ffffff;
+  border: 1px solid #a91d1d;
+  font-weight: bold;
+}
+input[value="Blacklist"]:hover{
+  background: #a91d1d;
+}
+
+input[value="Activate"]{
+  background: #2d6a4f;
+  color: #ffffff;
+  border: 1px solid #164a32;
+  font-weight: bold;
+}
+input[value="Activate"]:hover{
+  background: #164a32;
+}
+
+input[value="Search"]{
+  background:#ffe66d;
+  color: white;
+  border: 1px solid green;
+  font-weight: bold;
+}
+
+input[value="Search"]:hover{
+  background:#ffe66d;
 }

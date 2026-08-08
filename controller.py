@@ -122,7 +122,7 @@ def admin_console():
     recent_bookings=recent_bookings,
     q=q)
 
-
+#Blacklisting user/staff
 @app.route("/toggle_status/<int:user_id>", methods=["POST"])
 def toggle_status(user_id):
   if session.get('role') != 'Admin':
@@ -158,6 +158,7 @@ def booking_detail(booking_id):
   this_booking = booking.query.get(booking_id)
   return render_template("Booking.html", this_booking=this_booking)
 
+#Adding Trek
 
 @app.route("/admin/treks")
 def admin_treks():
@@ -256,7 +257,7 @@ def staff_dashboard():
   my_treks = my_profile.treks if my_profile else []
   return render_template("staff_dashboard.html", my_treks=my_treks)
 
-
+#Staff overseeing the trek 
 @app.route("/staff/trek/<int:trek_id>", methods=["GET","POST"])
 def staff_trek(trek_id):
   if session.get('role') != 'Staff':
@@ -338,12 +339,16 @@ def user_dashboard():
                           difficulty=difficulty, location=location)
 
 
+# Booking
+
 @app.route("/user/trek/<int:trek_id>", methods=["GET","POST"])
 def trek_details(trek_id):
   if session.get('role') != 'Trekker':
     return redirect(url_for('signin'))
   this_trek = trek.query.get(trek_id)
   my_profile = trekker.query.filter_by(user_id=session['uid']).first()
+
+  aldready_booked = booking.query.filter_by(trekker_id=my_profile.trekker_id , trek_id=trek_id , booking_status="Booked").first();
 
   if request.method == "POST":
     # prevent booking a trek that is not Open, or has no slots left
@@ -388,6 +393,7 @@ def my_bookings():
   bookings_list = my_profile.bookings if my_profile else []
   return render_template("my_bookings.html", bookings_list=bookings_list)
 
+# Trek Cancelling
 @app.route("/user/cancel_booking/<int:booking_id>", methods=["POST"])
 def cancel_booking(booking_id):
   if session.get('role')!= 'Trekker':

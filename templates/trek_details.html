@@ -28,6 +28,9 @@
         </table>
         <br>
 
+    {% if aldready_booked %}
+        <p class="center"><b>Trek aldready booked</b></p>
+    {% else %}
         <input type="button" value="Book Now" onclick="document.getElementById('popup1').style.display='block'">
 
         <div id="popup1" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5);">
@@ -45,7 +48,10 @@
             </div>
         </div>
 
+        
         <form id="bookingForm" method="POST" action="/user/trek/{{this_trek.trek_id}}" style="display:none;"></form>
+
+        {% endif %}
         <h6 class="center">{{error_msg}}</h6>
     </div>
 
